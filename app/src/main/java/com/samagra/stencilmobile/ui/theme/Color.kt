@@ -1,4 +1,4 @@
-package com.example.stencilmobile.ui.theme
+package com.samagra.stencilmobile.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

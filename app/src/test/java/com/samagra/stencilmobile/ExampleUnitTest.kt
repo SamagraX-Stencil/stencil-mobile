@@ -1,4 +1,4 @@
-package com.example.stencilmobile
+package com.samagra.stencilmobile
 
 import org.junit.Test
 
