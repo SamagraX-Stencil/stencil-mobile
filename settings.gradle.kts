@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Stencil Mobile"
 include(":app")
-include(":stencilmobile")
+include(":stencilmobiles")

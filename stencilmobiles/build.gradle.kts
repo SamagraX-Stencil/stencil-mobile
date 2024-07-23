@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("maven-publish")
 }
 
 android {
-    namespace = "com.samagra.stencilmobile"
+    namespace = "com.samagra.stencilmobiles"
     compileSdk = 34
 
     defaultConfig {
@@ -55,8 +56,27 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-//    androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("androidx.compose.material3:material3:1.2.1")
 
 }
+
+publishing{
+    publications{
+        register<MavenPublication>("release"){
+            groupId = "com.github.Samagra"
+            artifactId = "StencilMobile"
+            version = "1.0.0"
+
+            afterEvaluate{
+                from(components["release"])
+            }
+        }
+    }
+    repositories {
+        maven {
+            url = uri("https://jitpack.io")
+        }
+    }
+}
+
