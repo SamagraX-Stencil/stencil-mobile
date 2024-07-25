@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,11 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -29,39 +25,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CustomScreen(
-    title: String,
-    subtitle: String,
-    progress: Float? = null,
-    resultBoxData: ResultBoxData? = null,
-    bottomImageRes: Int? = null,
-    topImageRes: Int? = null,
-    topImageModifier: Modifier? = null,
-    bottomImageAlignment: Alignment.Horizontal = Alignment.End,
-    bottomImageModifier: Modifier? = null,
-    backgroundColor: Color? = null,
-    buttonConfig: ButtonConfig? = null,
-    additionalButtons: List<ButtonConfig> = emptyList(),
-    titleFontSize: TextUnit = 24.sp,
-    subtitleFontSize: TextUnit = 16.sp,
-    resultFontSize: TextUnit = 18.sp,
-    buttonFontSize: TextUnit = 16.sp,
+fun InstructionMolecule(
+    topInstructionModel: TopInstructionModel,
+    bottomInstructionModel: BottomInstructionModel = BottomInstructionModel(),
+    topInstructionStyle: TopInstructionStyle = TopInstructionStyle(),
+    bottomInstructionStyle: BottomInstructionStyle = BottomInstructionStyle(),
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(backgroundColor ?: Color.White),
+            .background(topInstructionStyle.backgroundColor ?: Color.White),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -70,19 +50,18 @@ fun CustomScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            topImageRes?.let {
+            topInstructionModel.topImageRes?.let {
                 Image(
                     painter = painterResource(id = it),
                     contentDescription = null,
-                    modifier = topImageModifier ?: Modifier
+                    modifier = topInstructionStyle.topImageModifier ?: Modifier
                         .width(180.dp)
                         .height(180.dp)
                         .padding(bottom = 16.dp)
                 )
-
             }
 
-            progress?.let {
+            topInstructionModel.progress?.let {
                 LinearProgressIndicator(
                     progress = { it },
                     modifier = Modifier.height(6.dp),
@@ -93,35 +72,38 @@ fun CustomScreen(
             }
 
             Text(
-                text = title,
-                fontSize = titleFontSize,
+                text = topInstructionModel.title,
+                fontSize = topInstructionStyle.titleFontSize,
                 fontWeight = FontWeight.Bold,
-                color = if (backgroundColor != Color.White) Color.White else Color(0xFF30347F),
+                color = if (topInstructionStyle.backgroundColor != Color.White) Color.White else Color(0xFF30347F),
                 modifier = Modifier.padding(vertical = 3.dp)
             )
 
-            resultBoxData?.let {
+            topInstructionModel.resultBoxData?.let {
                 ResultBox(
                     resultBoxData = it,
-                    resultFontSize = resultFontSize
+                    resultFontSize = topInstructionStyle.resultFontSize
                 )
             }
 
             Text(
-                text = subtitle,
-                fontSize = subtitleFontSize,
-                color = if (backgroundColor != Color.White) Color.White else Color(0xFF5E5D5C),
-                modifier = Modifier.padding(vertical = 3.dp).padding(start=16.dp,end=16.dp).align(Alignment.CenterHorizontally),
+                text = topInstructionModel.subtitle,
+                fontSize = topInstructionStyle.subtitleFontSize,
+                color = if (topInstructionStyle.backgroundColor != Color.White) Color.White else Color(0xFF5E5D5C),
+                modifier = Modifier
+                    .padding(vertical = 3.dp)
+                    .padding(start = 16.dp, end = 16.dp)
+                    .align(Alignment.CenterHorizontally),
                 textAlign = TextAlign.Center
             )
         }
 
-        bottomImageRes?.let {
-            if (bottomImageModifier != null) {
+        bottomInstructionModel.bottomImageRes?.let {
+            if (bottomInstructionStyle.bottomImageModifier != null) {
                 Image(
                     painter = painterResource(id = it),
                     contentDescription = null,
-                    modifier = bottomImageModifier.align(bottomImageAlignment)
+                    modifier = bottomInstructionStyle.bottomImageModifier.align(bottomInstructionStyle.bottomImageAlignment)
                 )
             } else {
                 Image(
@@ -130,7 +112,7 @@ fun CustomScreen(
                     modifier = Modifier
                         .width(150.dp)
                         .height(150.dp)
-                        .align(bottomImageAlignment)
+                        .align(bottomInstructionStyle.bottomImageAlignment)
                         .padding(16.dp)
                 )
             }
@@ -143,12 +125,18 @@ fun CustomScreen(
                 .padding(bottom = 10.dp)
                 .padding(16.dp)
         ) {
-            buttonConfig?.let {
-                CustomButton(buttonConfig = it, buttonFontSize = buttonFontSize)
+            bottomInstructionModel.buttonConfig?.let {
+                CustomButton(
+                    buttonConfig = it.copy(buttonFontSize = it.buttonFontSize),
+                    buttonFontSize = it.buttonFontSize
+                )
             }
 
-            additionalButtons.forEach { buttonConfig ->
-                CustomButton(buttonConfig = buttonConfig, buttonFontSize = buttonFontSize)
+            bottomInstructionModel.additionalButtons.forEach { buttonConfig ->
+                CustomButton(
+                    buttonConfig = buttonConfig.copy(buttonFontSize = buttonConfig.buttonFontSize),
+                    buttonFontSize = buttonConfig.buttonFontSize
+                )
             }
         }
     }
@@ -171,14 +159,14 @@ fun ResultBox(resultBoxData: ResultBoxData, resultFontSize: TextUnit) {
             fontSize = resultFontSize,
             color = Color.Black
         )
-        Divider(modifier = Modifier.padding(vertical = 4.dp))
+        HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
         ResultRow(
             label = resultBoxData.correctWordsText,
             value = resultBoxData.correctWordsCount,
             fontSize = resultFontSize,
             color = Color.Green
         )
-        Divider(modifier = Modifier.padding(vertical = 4.dp))
+        HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
         ResultRow(
             label = resultBoxData.wrongWordsText,
             value = resultBoxData.wrongWordsCount,
@@ -258,7 +246,35 @@ data class ButtonConfig(
     val text: String,
     val iconRes: Int? = null,
     val onClick: () -> Unit,
+    val buttonFontSize: TextUnit = 16.sp
 )
+data class TopInstructionModel(
+    val title: String,
+    val subtitle: String,
+    val progress: Float? = null,
+    val resultBoxData: ResultBoxData? = null,
+    val topImageRes: Int? = null,
+)
+
+data class BottomInstructionModel(
+    val bottomImageRes: Int? = null,
+    val buttonConfig: ButtonConfig? = null,
+    val additionalButtons: List<ButtonConfig> = emptyList(),
+)
+
+data class TopInstructionStyle(
+    val backgroundColor: Color? = Color.White,
+    val topImageModifier: Modifier? = null,
+    val titleFontSize: TextUnit = 24.sp,
+    val subtitleFontSize: TextUnit = 16.sp,
+    val resultFontSize: TextUnit = 18.sp,
+)
+
+data class BottomInstructionStyle(
+    val bottomImageAlignment: Alignment.Horizontal = Alignment.End,
+    val bottomImageModifier: Modifier? = null,
+)
+
 
 
 
