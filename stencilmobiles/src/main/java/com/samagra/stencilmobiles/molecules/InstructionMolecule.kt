@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -46,7 +47,6 @@ fun InstructionMolecule(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(
-            modifier = Modifier.weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -71,13 +71,17 @@ fun InstructionMolecule(
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
-            Text(
-                text = topInstructionModel.title,
-                fontSize = topInstructionStyle.titleFontSize,
-                fontWeight = FontWeight.Bold,
-                color = if (topInstructionStyle.backgroundColor != Color.White) Color.White else Color(0xFF30347F),
-                modifier = Modifier.padding(vertical = 3.dp)
-            )
+            topInstructionModel.title?.let {
+                androidx.compose.material3.Text(
+                    text = it,
+                    fontSize = topInstructionStyle.titleFontSize,
+                    fontWeight = FontWeight.Bold,
+                    color = if (topInstructionStyle.backgroundColor != Color.White) Color.White else Color(
+                        0xFF30347F
+                    ),
+                    modifier = Modifier.padding(vertical = 3.dp)
+                )
+            }
 
             topInstructionModel.resultBoxData?.let {
                 ResultBox(
@@ -86,16 +90,20 @@ fun InstructionMolecule(
                 )
             }
 
-            Text(
-                text = topInstructionModel.subtitle,
-                fontSize = topInstructionStyle.subtitleFontSize,
-                color = if (topInstructionStyle.backgroundColor != Color.White) Color.White else Color(0xFF5E5D5C),
-                modifier = Modifier
-                    .padding(vertical = 3.dp)
-                    .padding(start = 16.dp, end = 16.dp)
-                    .align(Alignment.CenterHorizontally),
-                textAlign = TextAlign.Center
-            )
+            topInstructionModel.subtitle?.let {
+                androidx.compose.material3.Text(
+                    text = it,
+                    fontSize = topInstructionStyle.subtitleFontSize,
+                    color = if (topInstructionStyle.backgroundColor != Color.White) Color.White else Color(
+                        0xFF5E5D5C
+                    ),
+                    modifier = Modifier
+                        .padding(vertical = 3.dp)
+                        .padding(start = 16.dp, end = 16.dp)
+                        .align(Alignment.CenterHorizontally),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
 
         bottomInstructionModel.bottomImageRes?.let {
@@ -103,7 +111,9 @@ fun InstructionMolecule(
                 Image(
                     painter = painterResource(id = it),
                     contentDescription = null,
-                    modifier = bottomInstructionStyle.bottomImageModifier.align(bottomInstructionStyle.bottomImageAlignment)
+                    modifier = bottomInstructionStyle.bottomImageModifier.align(
+                        bottomInstructionStyle.bottomImageAlignment
+                    )
                 )
             } else {
                 Image(
@@ -118,27 +128,29 @@ fun InstructionMolecule(
             }
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 5.dp)
-                .padding(bottom = 10.dp)
-                .padding(16.dp)
-        ) {
-            bottomInstructionModel.buttonConfig?.let {
+
+        bottomInstructionModel.buttonConfig?.let {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 5.dp)
+                    .padding(bottom = 10.dp)
+                    .padding(16.dp)
+            ) {
                 CustomButton(
                     buttonConfig = it.copy(buttonFontSize = it.buttonFontSize),
                     buttonFontSize = it.buttonFontSize
                 )
-            }
 
-            bottomInstructionModel.additionalButtons.forEach { buttonConfig ->
-                CustomButton(
-                    buttonConfig = buttonConfig.copy(buttonFontSize = buttonConfig.buttonFontSize),
-                    buttonFontSize = buttonConfig.buttonFontSize
-                )
+                bottomInstructionModel.additionalButtons.forEach { buttonConfig ->
+                    CustomButton(
+                        buttonConfig = buttonConfig.copy(buttonFontSize = buttonConfig.buttonFontSize),
+                        buttonFontSize = buttonConfig.buttonFontSize
+                    )
+                }
             }
         }
+
     }
 }
 
@@ -183,7 +195,7 @@ fun ResultRow(label: String, value: String, fontSize: TextUnit, color: Color) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
+        androidx.compose.material3.Text(
             text = label,
             color = color,
             fontSize = fontSize,
@@ -198,7 +210,7 @@ fun ResultRow(label: String, value: String, fontSize: TextUnit, color: Color) {
             thickness = 1.dp,
             color = Color.Gray
         )
-        Text(
+        androidx.compose.material3.Text(
             text = value,
             color = color,
             fontSize = fontSize,
@@ -218,7 +230,11 @@ fun CustomButton(buttonConfig: ButtonConfig, buttonFontSize: TextUnit) {
         shape = RoundedCornerShape(4.dp),
         colors = ButtonDefaults.buttonColors(Color(0xFF2F3293))
     ) {
-        Text(text = buttonConfig.text, fontSize = buttonFontSize, color = Color.White)
+        androidx.compose.material3.Text(
+            text = buttonConfig.text,
+            fontSize = buttonFontSize,
+            color = Color.White
+        )
         Spacer(modifier = Modifier.width(8.dp))
         buttonConfig.iconRes?.let {
             Icon(
@@ -246,11 +262,12 @@ data class ButtonConfig(
     val text: String,
     val iconRes: Int? = null,
     val onClick: () -> Unit,
-    val buttonFontSize: TextUnit = 16.sp
+    val buttonFontSize: TextUnit = 16.sp,
 )
+
 data class TopInstructionModel(
-    val title: String,
-    val subtitle: String,
+    val title: String? = null,
+    val subtitle: String? = null,
     val progress: Float? = null,
     val resultBoxData: ResultBoxData? = null,
     val topImageRes: Int? = null,
@@ -259,7 +276,7 @@ data class TopInstructionModel(
 data class BottomInstructionModel(
     val bottomImageRes: Int? = null,
     val buttonConfig: ButtonConfig? = null,
-    val additionalButtons: List<ButtonConfig> = emptyList(),
+    val additionalButtons: List<ButtonConfig> = emptyList()
 )
 
 data class TopInstructionStyle(
