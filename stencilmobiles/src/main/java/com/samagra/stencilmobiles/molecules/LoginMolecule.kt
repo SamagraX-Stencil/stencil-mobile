@@ -59,8 +59,7 @@ fun LoginMolecule(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 25.dp, end = 25.dp, top = 25.dp)
-            .background(Color.Yellow),
+            .padding(start = 15.dp, end = 15.dp, top = 15.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
