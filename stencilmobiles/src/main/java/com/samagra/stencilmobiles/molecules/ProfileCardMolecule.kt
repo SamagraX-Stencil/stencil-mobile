@@ -39,7 +39,7 @@ fun ProfileCardMolecule(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(8.dp)
             .border(
                 border = BorderStroke(
                     width = 4.dp,

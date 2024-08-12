@@ -100,11 +100,11 @@ fun ReadingPassageMolecule(
                 val readWords = passageWords.take(passageModel.readWordsCount).joinToString(" ")
                 val unreadWords = passageWords.drop(passageModel.readWordsCount).joinToString(" ")
 
-                withStyle(style = SpanStyle(color = Color(0xFF2F3293), fontWeight = FontWeight.Bold)) {
+                withStyle(style = SpanStyle(color = Color(0xFF2F3293), fontWeight = FontWeight.Normal)) {
                     append(readWords)
                     if (readWords.isNotEmpty()) append(" ")
                 }
-                withStyle(style = SpanStyle(color = Color.Gray)) {
+                withStyle(style = SpanStyle(color = Color.Gray, fontWeight = FontWeight.Normal)) {
                     append(unreadWords)
                 }
 
