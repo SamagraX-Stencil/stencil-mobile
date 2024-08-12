@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -35,8 +36,7 @@ import kotlinx.serialization.json.jsonPrimitive
 @Composable
 fun ReadingPassageMolecule(
     passageModel: PassageModel,
-    passageStyle: PassageStyle,
-    scoreColorMapping: Map<Int, Color>,
+    passageStyle: PassageStyle
 ) {
     val wordWithValue = remember { passageModel.jsonArray?.let { parseJsonArray(it) } }
 
@@ -83,7 +83,7 @@ fun ReadingPassageMolecule(
                         allWordsMatch = false
                         break
                     }
-                    val color = scoreColorMapping[score] ?: Color.Gray
+                    val color = passageModel.scoreColorMapping?.get(score) ?: Color.Gray
                     withStyle(style = SpanStyle(color = color)) {
                         append(word)
                         append(" ")
@@ -100,11 +100,11 @@ fun ReadingPassageMolecule(
                 val readWords = passageWords.take(passageModel.readWordsCount).joinToString(" ")
                 val unreadWords = passageWords.drop(passageModel.readWordsCount).joinToString(" ")
 
-                withStyle(style = SpanStyle(color = Color(0xFF2F3293), fontWeight = FontWeight.Normal)) {
+                withStyle(style = SpanStyle(color = passageStyle.readTextColor)) {
                     append(readWords)
                     if (readWords.isNotEmpty()) append(" ")
                 }
-                withStyle(style = SpanStyle(color = Color.Gray, fontWeight = FontWeight.Normal)) {
+                withStyle(style = SpanStyle(color = passageStyle.unreadTextColor)) {
                     append(unreadWords)
                 }
 
@@ -120,9 +120,7 @@ fun ReadingPassageMolecule(
             item {
                 Text(
                     text = annotatedText,
-                    textAlign = TextAlign.Start,
-                    fontSize = passageStyle.fontSize,
-                    lineHeight = passageStyle.lineHeight,
+                    style = passageStyle.textStyle
                 )
             }
 
@@ -153,13 +151,15 @@ data class PassageModel(
     val jsonArray: String? = null,
     val imageRes: Int? = null,
     val readWordsCount: Int? = 0,
+    val scoreColorMapping: Map<Int, Color>? = null
 )
 
 data class PassageStyle(
-    val fontSize: TextUnit = 40.sp,
-    val lineHeight: TextUnit = 70.sp,
+    val textStyle: TextStyle = TextStyle( fontSize = 40.sp, lineHeight = 70.sp, fontWeight = FontWeight.Normal, textAlign = TextAlign.Start),
     val imageAlignment: Alignment.Horizontal = Alignment.End,
     val imageModifier: Modifier? = null,
+    val readTextColor: Color = Color(0xFF2F3293),
+    val unreadTextColor: Color = Color.Gray
 )
 
 fun parseJsonArray(jsonArray: String): List<Pair<String, Int>> {
