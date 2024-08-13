@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -26,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
@@ -83,10 +86,9 @@ fun InstructionMolecule(
                 )
             }
 
-            topInstructionModel.resultBoxData?.let {
+            topInstructionModel.resultBoxDataList?.let {
                 ResultBox(
-                    resultBoxData = it,
-                    resultFontSize = topInstructionStyle.resultFontSize
+                    resultBoxDataList = topInstructionModel.resultBoxDataList
                 )
             }
 
@@ -155,38 +157,30 @@ fun InstructionMolecule(
 }
 
 @Composable
-fun ResultBox(resultBoxData: ResultBoxData, resultFontSize: TextUnit) {
-    Column(
+fun ResultBox(resultBoxDataList: List<ResultBoxData>) {
+    LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
             .shadow(elevation = 5.dp, shape = RoundedCornerShape(8.dp))
             .background(Color.White, shape = RoundedCornerShape(8.dp))
-            .border(2.dp, Color(0xFF2F3293), shape = RoundedCornerShape(8.dp))
-            .padding(16.dp)
+            .border(2.dp, Color(0xFF2F3293), shape = RoundedCornerShape(8.dp)),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        ResultRow(
-            label = resultBoxData.totalWordsText,
-            value = resultBoxData.totalWordsCount,
-            fontSize = resultFontSize,
-            color = Color.Black
-        )
-        HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
-        ResultRow(
-            label = resultBoxData.correctWordsText,
-            value = resultBoxData.correctWordsCount,
-            fontSize = resultFontSize,
-            color = Color.Green
-        )
-        HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
-        ResultRow(
-            label = resultBoxData.wrongWordsText,
-            value = resultBoxData.wrongWordsCount,
-            fontSize = resultFontSize,
-            color = Color.Red
-        )
+        items(resultBoxDataList) { data ->
+            Column {
+                ResultRow(
+                    label = data.labelText,
+                    value = data.valueText,
+                    fontSize = data.valueTextStyle.fontSize,
+                    color = data.valueTextStyle.color
+                )
+            }
+        }
     }
 }
+
 
 @Composable
 fun ResultRow(label: String, value: String, fontSize: TextUnit, color: Color) {
@@ -195,7 +189,7 @@ fun ResultRow(label: String, value: String, fontSize: TextUnit, color: Color) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        androidx.compose.material3.Text(
+        Text(
             text = label,
             color = color,
             fontSize = fontSize,
@@ -210,7 +204,7 @@ fun ResultRow(label: String, value: String, fontSize: TextUnit, color: Color) {
             thickness = 1.dp,
             color = Color.Gray
         )
-        androidx.compose.material3.Text(
+        Text(
             text = value,
             color = color,
             fontSize = fontSize,
@@ -250,13 +244,12 @@ fun CustomButton(buttonConfig: ButtonConfig, buttonFontSize: TextUnit) {
 }
 
 data class ResultBoxData(
-    val totalWordsText: String,
-    val totalWordsCount: String,
-    val correctWordsText: String,
-    val correctWordsCount: String,
-    val wrongWordsText: String,
-    val wrongWordsCount: String,
+    val labelText: String,
+    val valueText: String,
+    val labelTextStyle: TextStyle = TextStyle(fontSize = 14.sp, color = Color.Black),
+    val valueTextStyle: TextStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
 )
+
 
 data class ButtonConfig(
     val text: String,
@@ -269,7 +262,7 @@ data class TopInstructionModel(
     val title: String? = null,
     val subtitle: String? = null,
     val progress: Float? = null,
-    val resultBoxData: ResultBoxData? = null,
+    val resultBoxDataList: List<ResultBoxData>? = null,
     val topImageRes: Int? = null,
 )
 
