@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -87,9 +91,13 @@ fun InstructionMolecule(
             }
 
             topInstructionModel.resultBoxDataList?.let {
-                ResultBox(
-                    resultBoxDataList = topInstructionModel.resultBoxDataList
-                )
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(topInstructionStyle.heightResultBox)) {
+                    ResultBox(
+                        resultBoxDataList = topInstructionModel.resultBoxDataList
+                    )
+                }
             }
 
             topInstructionModel.subtitle?.let {
@@ -179,6 +187,7 @@ fun ResultBox(resultBoxDataList: List<ResultBoxData>) {
             }
         }
     }
+
 }
 
 
@@ -269,7 +278,7 @@ data class TopInstructionModel(
 data class BottomInstructionModel(
     val bottomImageRes: Int? = null,
     val buttonConfig: ButtonConfig? = null,
-    val additionalButtons: List<ButtonConfig> = emptyList()
+    val additionalButtons: List<ButtonConfig> = emptyList(),
 )
 
 data class TopInstructionStyle(
@@ -278,6 +287,7 @@ data class TopInstructionStyle(
     val titleFontSize: TextUnit = 24.sp,
     val subtitleFontSize: TextUnit = 16.sp,
     val resultFontSize: TextUnit = 18.sp,
+    val heightResultBox: Dp = 200.dp
 )
 
 data class BottomInstructionStyle(
