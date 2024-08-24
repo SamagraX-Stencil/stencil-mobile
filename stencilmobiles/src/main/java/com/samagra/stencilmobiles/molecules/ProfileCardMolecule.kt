@@ -27,9 +27,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 
 @Composable
 fun ProfileCardMolecule(
@@ -42,7 +44,7 @@ fun ProfileCardMolecule(
             .padding(8.dp)
             .border(
                 border = BorderStroke(
-                    width = 4.dp,
+                    width = profileCardStyles.borderWidth,
                     brush = Brush.linearGradient(colors = profileCardStyles.gradientColors)
                 ),
                 shape = RoundedCornerShape(8.dp)
@@ -52,17 +54,30 @@ fun ProfileCardMolecule(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             profileCardAttributes.name?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.headlineSmall.copy(
-                        brush = Brush.linearGradient(colors = profileCardStyles.gradientColors)
-                    ),
-                    color = Color.Transparent,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(bottom = 3.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
+
+                if(profileCardStyles.nameTextColor != null){
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = profileCardStyles.nameTextColor,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(bottom = 3.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                } else{
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            brush = Brush.linearGradient(colors = profileCardStyles.gradientColors)
+                        ),
+                        color = Color.Transparent,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(bottom = 3.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
             }
 
             Divider(
@@ -119,11 +134,11 @@ fun ProfileCardMolecule(
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(start = 20.dp)
+                        .padding(start = 20.dp, top = profileCardStyles.gapImageDivider)
                 ) {
-                    profileCardAttributes.imageRes?.let {
-                        Image(
-                            painter = painterResource(id = it),
+                    profileCardAttributes.imageUrl?.let {
+                        AsyncImage(
+                            model = profileCardAttributes.imageUrl,
                             contentDescription = "Profile Image",
                             modifier = profileCardStyles.imageModifier
                         )
@@ -156,12 +171,14 @@ data class ProfileCardAttributes(
     val value2: String? = "",
     val label3: String? = "ब्लॉक",
     val value3: String? = "",
-    val imageRes: Int?,
+    val imageUrl: String?,
     val badgeText: String? = null,
 )
 
 data class ProfileCardStyles(
     val gradientColors: List<Color> = listOf(Color.Gray),
+    val borderWidth: Dp = 4.dp,
+    val nameTextColor: Color? = null,
     val labelColor: Color = Color.Black,
     val valueColor: Color = Color.Blue,
     val labelFontSize: TextUnit = 16.sp,
@@ -171,6 +188,7 @@ data class ProfileCardStyles(
     val badgeTextFontSize: TextUnit = 12.sp,
     val badgeTextFontWeight: FontWeight = FontWeight.Bold,
     val imageModifier: Modifier = Modifier.width(64.dp).height(64.dp),
+    val gapImageDivider: Dp = 0.dp
 )
 
 

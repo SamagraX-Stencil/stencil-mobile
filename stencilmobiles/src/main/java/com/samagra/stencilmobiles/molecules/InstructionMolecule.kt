@@ -93,7 +93,7 @@ fun InstructionMolecule(
             topInstructionModel.resultBoxDataList?.let {
                 Box(modifier = Modifier
                     .fillMaxWidth()
-                    .height(topInstructionStyle.heightResultBox)) {
+                    ) {
                     ResultBox(
                         resultBoxDataList = topInstructionModel.resultBoxDataList
                     )
@@ -166,28 +166,36 @@ fun InstructionMolecule(
 
 @Composable
 fun ResultBox(resultBoxDataList: List<ResultBoxData>) {
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
             .shadow(elevation = 5.dp, shape = RoundedCornerShape(8.dp))
             .background(Color.White, shape = RoundedCornerShape(8.dp))
             .border(2.dp, Color(0xFF2F3293), shape = RoundedCornerShape(8.dp)),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
-        items(resultBoxDataList) { data ->
-            Column {
+        resultBoxDataList.forEachIndexed { index, resultBoxData ->
+            val topPadding = if (index == 0) 16.dp else 0.dp
+            val bottomPadding = if (index == resultBoxDataList.size - 1) 16.dp else 0.dp
+
+            Column(
+                modifier = Modifier.padding(
+                    start = 16.dp,
+                    end = 16.dp,
+                    top = topPadding,
+                    bottom = bottomPadding
+                )
+            ) {
                 ResultRow(
-                    label = data.labelText,
-                    value = data.valueText,
-                    fontSize = data.valueTextStyle.fontSize,
-                    color = data.valueTextStyle.color
+                    label = resultBoxData.labelText,
+                    value = resultBoxData.valueText,
+                    fontSize = resultBoxData.valueTextStyle.fontSize,
+                    color = resultBoxData.valueTextStyle.color
                 )
             }
         }
     }
-
 }
 
 
