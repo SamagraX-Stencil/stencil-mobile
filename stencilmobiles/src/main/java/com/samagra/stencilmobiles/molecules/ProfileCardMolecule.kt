@@ -179,8 +179,8 @@ data class ProfileCardAttributes(
     val value2: String? = "",
     val label3: String? = "ब्लॉक",
     val value3: String? = "",
-    val imageUrl: String?,
-    val imageRes: Int?,
+    val imageUrl: String? = null,
+    val imageRes: Int? = null,
     val badgeText: String? = null,
 )
 
