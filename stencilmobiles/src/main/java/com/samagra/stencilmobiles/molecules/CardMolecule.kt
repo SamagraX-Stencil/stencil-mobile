@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.samagra.stencilmobiles.R
 
 @Composable
@@ -48,13 +49,21 @@ fun CardMolecule(
                 ) {
                     Column {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            cardAttributes.image?.let {
+                            cardAttributes.imageRes?.let {
                                 Image(
                                     painter = painterResource(id = it),
                                     contentDescription = null,
                                     modifier = cardStyles.imageModifier
                                 )
                                 Spacer(modifier = Modifier.width(10.dp))
+                            }
+
+                            cardAttributes.imageUrl?.let{
+                                AsyncImage(
+                                    model = it,
+                                    contentDescription = "Profile Image",
+                                    modifier = cardStyles.imageModifier
+                                )
                             }
                             Column {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -139,7 +148,8 @@ data class CardAttributes(
     val number: String? = null,
     val subtitle: String? = null,
     val buttonText: String? = null,
-    val image: Int? = null,
+    val imageRes: Int? = null,
+    val imageUrl: String? = null,
     val expandImage: Int = R.drawable.expand,
     val collapseImage: Int = R.drawable.compress,
     val attachedExpandedContent: Boolean = false,

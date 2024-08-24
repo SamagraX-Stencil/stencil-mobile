@@ -144,6 +144,14 @@ fun ProfileCardMolecule(
                         )
                     }
 
+                    profileCardAttributes.imageRes?.let {
+                        Image(
+                            painter = painterResource(id = it),
+                            contentDescription = "Profile Image",
+                            modifier = profileCardStyles.imageModifier
+                        )
+                    }
+
                     profileCardAttributes.badgeText?.let {
                         Text(
                             text = it,
@@ -172,6 +180,7 @@ data class ProfileCardAttributes(
     val label3: String? = "ब्लॉक",
     val value3: String? = "",
     val imageUrl: String?,
+    val imageRes: Int?,
     val badgeText: String? = null,
 )
 
