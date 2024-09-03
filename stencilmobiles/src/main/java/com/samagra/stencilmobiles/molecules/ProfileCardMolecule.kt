@@ -97,7 +97,7 @@ fun ProfileCardMolecule(
             ) {
                 Column(
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(1.5f)
                         .padding(top = 20.dp)
                 ) {
                     Text(
