@@ -118,12 +118,14 @@ fun CardMolecule(
                             if (isExpanded) {
                                 Icon(
                                     painter = painterResource(cardAttributes.expandImage),
+                                    tint = cardStyles.colorExpandCollapseImage,
                                     contentDescription = null,
                                     modifier = cardStyles.buttonImageModifier
                                 )
                             } else {
                                 Icon(
                                     painter = painterResource(cardAttributes.collapseImage),
+                                    tint = cardStyles.colorExpandCollapseImage,
                                     contentDescription = null,
                                     modifier = cardStyles.buttonImageModifier
                                 )
@@ -183,5 +185,6 @@ data class CardStyles(
     val imageModifier: Modifier = Modifier.size(35.dp),
     val buttonImageModifier: Modifier = Modifier.size(30.dp),
     val cardBorder: BorderStroke? = BorderStroke(1.dp, Color(0x3E06753C)),
+    val colorExpandCollapseImage: Color = Color.White
 )
 
