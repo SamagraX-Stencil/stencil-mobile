@@ -4,12 +4,14 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -26,6 +28,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -68,11 +71,10 @@ fun ProfileCardMolecule(
                 } else{
                     Text(
                         text = it,
-                        style = MaterialTheme.typography.headlineSmall.copy(
+                        style = profileCardStyles.nameTextStyle.copy(
                             brush = Brush.linearGradient(colors = profileCardStyles.gradientColors)
                         ),
                         color = Color.Transparent,
-                        fontWeight = FontWeight.Bold,
                         modifier = Modifier
                             .padding(bottom = 3.dp)
                             .align(Alignment.CenterHorizontally)
@@ -90,10 +92,12 @@ fun ProfileCardMolecule(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 10.dp, end = 10.dp)
+                    .padding(start = 10.dp, end = 10.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(
                     modifier = Modifier
+                        .weight(1f)
                         .padding(top = 20.dp)
                 ) {
                     Text(
@@ -134,7 +138,8 @@ fun ProfileCardMolecule(
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(start = 20.dp, top = profileCardStyles.gapImageDivider)
+                        .padding(start = 20.dp, top = profileCardStyles.gapImageDivider),
+                    horizontalAlignment = Alignment.End
                 ) {
                     profileCardAttributes.imageUrl?.let {
                         AsyncImage(
@@ -157,12 +162,13 @@ fun ProfileCardMolecule(
                             text = it,
                             style = TextStyle(
                                 fontSize = profileCardStyles.badgeTextFontSize,
-                                fontWeight = profileCardStyles.badgeTextFontWeight
+                                fontWeight = profileCardStyles.badgeTextFontWeight,
+                                textAlign = TextAlign.Center
                             ),
                             color = profileCardStyles.valueColor,
-                            modifier = Modifier
+                            modifier = profileCardStyles.badgeTextModifier
                                 .padding(top = 8.dp, bottom = 5.dp)
-                                .align(Alignment.CenterHorizontally)
+                                .align(Alignment.End)
                         )
                     }
                 }
@@ -188,15 +194,17 @@ data class ProfileCardStyles(
     val gradientColors: List<Color> = listOf(Color.Gray),
     val borderWidth: Dp = 4.dp,
     val nameTextColor: Color? = null,
+    val nameTextStyle: TextStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
     val labelColor: Color = Color.Black,
     val valueColor: Color = Color.Blue,
-    val labelFontSize: TextUnit = 16.sp,
+    val labelFontSize: TextUnit = 14.sp,
     val labelFontWeight: FontWeight = FontWeight.Normal,
-    val valueFontSize: TextUnit = 16.sp,
+    val valueFontSize: TextUnit = 14.sp,
     val valueFontWeight: FontWeight = FontWeight.Bold,
     val badgeTextFontSize: TextUnit = 12.sp,
     val badgeTextFontWeight: FontWeight = FontWeight.Bold,
     val imageModifier: Modifier = Modifier.width(64.dp).height(64.dp),
+    val badgeTextModifier: Modifier = Modifier.width(100.dp),
     val gapImageDivider: Dp = 0.dp
 )
 

@@ -13,8 +13,9 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CardListMolecule(
     cardItems: List<CardAttributes>,
-    cardStyles: CardStyles = CardStyles()
+    cardStyles: List<CardStyles>
 ) {
+    val itemCount = minOf(cardItems.size, cardStyles.size)
 
     Column(
         modifier = Modifier
@@ -22,10 +23,10 @@ fun CardListMolecule(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        for (cardItem in cardItems) {
+        for (index in 0 until itemCount) {
             CardMolecule(
-                cardAttributes = cardItem,
-                cardStyles = cardStyles
+                cardAttributes = cardItems[index],
+                cardStyles = cardStyles[index]
             )
         }
     }
