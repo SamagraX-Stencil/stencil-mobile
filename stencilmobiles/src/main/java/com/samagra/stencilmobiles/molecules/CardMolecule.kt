@@ -64,6 +64,7 @@ fun CardMolecule(
                                     contentDescription = "Profile Image",
                                     modifier = cardStyles.imageModifier
                                 )
+                                Spacer(modifier = Modifier.width(10.dp))
                             }
                             Column {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
