@@ -1,5 +1,6 @@
 package com.samagra.stencilmobiles.molecules
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -49,8 +50,12 @@ fun OtpInputAtom(
     val focusRequesters = remember { List(numberOfDigits) { FocusRequester() } }
     var maskedChars by remember { mutableStateOf(List(numberOfDigits) { true }) }
 
-    LaunchedEffect(Unit) {
-        focusRequesters[0].requestFocus()
+    LaunchedEffect(otpInput) {
+        if (otpInput.length == numberOfDigits) {
+            focusRequesters[numberOfDigits - 1].requestFocus()
+        } else if (otpInput.isEmpty()) {
+            focusRequesters[0].requestFocus()
+        }
     }
 
     Row(
