@@ -51,7 +51,6 @@ fun LoginMolecule(
     otpStyle: OtpStyle = OtpStyle()
 ) {
     var genericText by remember { mutableStateOf(loginModel.genericInput) }
-    var otpText by remember { mutableStateOf(otpModel.otpInput) }
     var passwordText by remember { mutableStateOf(loginModel.passwordInput ?: "") }
     var passwordVisible by remember { mutableStateOf(false) }
     var borderColor by remember { mutableStateOf(Color.LightGray) }
@@ -85,9 +84,9 @@ fun LoginMolecule(
 
         if (otpModel.isOtpScreen) {
             OtpInputAtom(
-                otpInput = otpText,
+                otpInput = otpModel.otpInput,
                 onOtpInputChange = {
-                    otpText = it
+                    otpModel.otpInput = it
                     otpModel.onOtpInputChange(it)
                 },
                 numberOfDigits = otpModel.numberOfOtpDigits,
@@ -228,7 +227,7 @@ data class LoginModel(
 
 data class OtpModel(
     val isOtpScreen: Boolean = false,
-    val otpInput: String = "",
+    var otpInput: String = "",
     val onOtpInputChange: (String) -> Unit = {},
     val numberOfOtpDigits: Int = 4,
     val resendOtpText: String = "OTP फिर से भेजें",
