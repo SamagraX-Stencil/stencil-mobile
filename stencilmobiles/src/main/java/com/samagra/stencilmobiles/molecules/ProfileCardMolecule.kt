@@ -98,7 +98,7 @@ fun ProfileCardMolecule(
                 Column(
                     modifier = Modifier
                         .weight(1.5f)
-                        .padding(top = 20.dp)
+                        .padding(top = 16.dp)
                 ) {
                     Text(
                         text = buildAnnotatedString {
@@ -109,7 +109,7 @@ fun ProfileCardMolecule(
                                 append(profileCardAttributes.value1)
                             }
                         },
-                        modifier = Modifier.padding(bottom = 12.dp)
+                        modifier = Modifier.padding(bottom = 16.dp)
                     )
                     Text(
                         text = buildAnnotatedString {
@@ -120,7 +120,7 @@ fun ProfileCardMolecule(
                                 append(profileCardAttributes.value2)
                             }
                         },
-                        modifier = Modifier.padding(bottom = 12.dp)
+                        modifier = Modifier.padding(bottom = 16.dp)
                     )
                     Text(
                         text = buildAnnotatedString {
@@ -131,7 +131,7 @@ fun ProfileCardMolecule(
                                 append(profileCardAttributes.value3)
                             }
                         },
-                        modifier = Modifier.padding(bottom = 0.dp)
+                        modifier = Modifier.padding(bottom = 16.dp)
                     )
                 }
 

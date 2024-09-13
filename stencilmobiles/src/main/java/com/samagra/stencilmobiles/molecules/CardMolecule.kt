@@ -114,7 +114,7 @@ fun CardMolecule(
                         }
 
                         if (cardAttributes.isExpandable) {
-                            Spacer(modifier = Modifier.width(10.dp))
+                            Spacer(modifier = Modifier.width(6.dp))
 
                             if (isExpanded) {
                                 Icon(
