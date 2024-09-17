@@ -104,7 +104,8 @@ fun CardMolecule(
                         colors = ButtonDefaults.buttonColors(cardStyles.buttonBackgroundColor),
                         shape = RoundedCornerShape(cardStyles.buttonCorner),
                         modifier = cardStyles.buttonModifier,
-                        border = cardStyles.buttonBorder
+                        border = cardStyles.buttonBorder,
+                        contentPadding = cardStyles.buttonContentPadding
                     ) {
                         cardAttributes.buttonText?.let {
                             Text(
@@ -178,6 +179,7 @@ data class CardStyles(
     val buttonModifier: Modifier = Modifier
         .width(135.dp)
         .height(28.dp),
+    val buttonContentPadding: PaddingValues = PaddingValues(10.dp),
     val buttonBorder: BorderStroke? = null,
     val buttonCorner: Dp = 6.dp,
     val backgroundColor: Color = Color.White,

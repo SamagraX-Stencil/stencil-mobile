@@ -191,7 +191,7 @@ data class ProfileCardAttributes(
 )
 
 data class ProfileCardStyles(
-    val gradientColors: List<Color> = listOf(Color.Gray),
+    val gradientColors: List<Color> = listOf(Color(0xFF3D3C3C)),
     val borderWidth: Dp = 4.dp,
     val nameTextColor: Color? = null,
     val nameTextStyle: TextStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
