@@ -30,7 +30,7 @@ fun CardMolecule(
 ) {
     var isExpanded by remember { mutableStateOf(false) }
 
-    Column(Modifier.padding(cardStyles.contentPadding)) {
+    Column(Modifier.padding(cardStyles.cardPadding)) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -41,7 +41,7 @@ fun CardMolecule(
             colors = CardDefaults.cardColors(cardStyles.backgroundColor),
             border = cardStyles.cardBorder
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(cardStyles.contentPadding)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -184,7 +184,8 @@ data class CardStyles(
     val buttonCorner: Dp = 6.dp,
     val backgroundColor: Color = Color.White,
     val cardCornerRadius: Int = 10,
-    val contentPadding: PaddingValues = PaddingValues(10.dp),
+    val contentPadding: PaddingValues = PaddingValues(16.dp),
+    val cardPadding: PaddingValues = PaddingValues(10.dp),
     val imageModifier: Modifier = Modifier.size(35.dp),
     val buttonImageModifier: Modifier = Modifier.size(30.dp),
     val cardBorder: BorderStroke? = BorderStroke(1.dp, Color(0x3E06753C)),
