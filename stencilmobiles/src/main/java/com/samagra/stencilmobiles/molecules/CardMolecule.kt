@@ -185,7 +185,7 @@ data class CardStyles(
     val backgroundColor: Color = Color.White,
     val cardCornerRadius: Int = 10,
     val contentPadding: PaddingValues = PaddingValues(16.dp),
-    val cardPadding: PaddingValues = PaddingValues(10.dp),
+    val cardPadding: PaddingValues = PaddingValues(10.dp),  
     val imageModifier: Modifier = Modifier.size(35.dp),
     val buttonImageModifier: Modifier = Modifier.size(30.dp),
     val cardBorder: BorderStroke? = BorderStroke(1.dp, Color(0x3E06753C)),

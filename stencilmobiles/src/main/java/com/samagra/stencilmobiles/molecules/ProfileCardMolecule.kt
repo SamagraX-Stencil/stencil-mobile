@@ -100,39 +100,48 @@ fun ProfileCardMolecule(
                         .weight(1.5f)
                         .padding(top = 18.dp)
                 ) {
-                    Text(
-                        text = buildAnnotatedString {
-                            withStyle(style = SpanStyle(color = profileCardStyles.labelColor, fontSize = profileCardStyles.labelFontSize, fontWeight = profileCardStyles.labelFontWeight)) {
-                                append("${profileCardAttributes.label1}: ")
-                            }
-                            withStyle(style = SpanStyle(color = profileCardStyles.valueColor, fontSize = profileCardStyles.valueFontSize, fontWeight = profileCardStyles.valueFontWeight)) {
-                                append(profileCardAttributes.value1)
-                            }
-                        },
-                        modifier = Modifier.padding(bottom = 12.dp)
-                    )
-                    Text(
-                        text = buildAnnotatedString {
-                            withStyle(style = SpanStyle(color = profileCardStyles.labelColor, fontSize = profileCardStyles.labelFontSize, fontWeight = profileCardStyles.labelFontWeight)) {
-                                append("${profileCardAttributes.label2}: ")
-                            }
-                            withStyle(style = SpanStyle(color = profileCardStyles.valueColor, fontSize = profileCardStyles.valueFontSize, fontWeight = profileCardStyles.valueFontWeight)) {
-                                append(profileCardAttributes.value2)
-                            }
-                        },
-                        modifier = Modifier.padding(bottom = 12.dp)
-                    )
-                    Text(
-                        text = buildAnnotatedString {
-                            withStyle(style = SpanStyle(color = profileCardStyles.labelColor, fontSize = profileCardStyles.labelFontSize, fontWeight = profileCardStyles.labelFontWeight)) {
-                                append("${profileCardAttributes.label3}: ")
-                            }
-                            withStyle(style = SpanStyle(color = profileCardStyles.valueColor, fontSize = profileCardStyles.valueFontSize, fontWeight = profileCardStyles.valueFontWeight)) {
-                                append(profileCardAttributes.value3)
-                            }
-                        },
-                        modifier = Modifier.padding(bottom = 5.dp)
-                    )
+                    profileCardAttributes.value1?.let {
+                        Text(
+                            text = buildAnnotatedString {
+                                withStyle(style = SpanStyle(color = profileCardStyles.labelColor, fontSize = profileCardStyles.labelFontSize, fontWeight = profileCardStyles.labelFontWeight)) {
+                                    append("${profileCardAttributes.label1}: ")
+                                }
+                                withStyle(style = SpanStyle(color = profileCardStyles.valueColor, fontSize = profileCardStyles.valueFontSize, fontWeight = profileCardStyles.valueFontWeight)) {
+                                    append(profileCardAttributes.value1)
+                                }
+                            },
+                            modifier = Modifier.padding(bottom = 12.dp)
+                        )
+                    }
+
+                    profileCardAttributes.value2?.let {
+                        Text(
+                            text = buildAnnotatedString {
+                                withStyle(style = SpanStyle(color = profileCardStyles.labelColor, fontSize = profileCardStyles.labelFontSize, fontWeight = profileCardStyles.labelFontWeight)) {
+                                    append("${profileCardAttributes.label2}: ")
+                                }
+                                withStyle(style = SpanStyle(color = profileCardStyles.valueColor, fontSize = profileCardStyles.valueFontSize, fontWeight = profileCardStyles.valueFontWeight)) {
+                                    append(profileCardAttributes.value2)
+                                }
+                            },
+                            modifier = Modifier.padding(bottom = 12.dp)
+                        )
+                    }
+
+                    profileCardAttributes.value3?.let {
+                        Text(
+                            text = buildAnnotatedString {
+                                withStyle(style = SpanStyle(color = profileCardStyles.labelColor, fontSize = profileCardStyles.labelFontSize, fontWeight = profileCardStyles.labelFontWeight)) {
+                                    append("${profileCardAttributes.label3}: ")
+                                }
+                                withStyle(style = SpanStyle(color = profileCardStyles.valueColor, fontSize = profileCardStyles.valueFontSize, fontWeight = profileCardStyles.valueFontWeight)) {
+                                    append(profileCardAttributes.value3)
+                                }
+                            },
+                            modifier = Modifier.padding(bottom = 5.dp)
+                        )
+                    }
+
                 }
 
                 Column(
