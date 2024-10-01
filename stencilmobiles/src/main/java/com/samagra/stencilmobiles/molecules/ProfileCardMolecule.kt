@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -44,7 +45,7 @@ fun ProfileCardMolecule(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(profileCardStyles.cardPadding)
             .border(
                 border = BorderStroke(
                     width = profileCardStyles.borderWidth,
@@ -214,7 +215,8 @@ data class ProfileCardStyles(
     val badgeTextFontWeight: FontWeight = FontWeight.Bold,
     val imageModifier: Modifier = Modifier.width(64.dp).height(64.dp),
     val badgeTextModifier: Modifier = Modifier.width(100.dp),
-    val gapImageDivider: Dp = 0.dp
+    val gapImageDivider: Dp = 0.dp,
+    val cardPadding: PaddingValues = PaddingValues(8.dp)
 )
 
 

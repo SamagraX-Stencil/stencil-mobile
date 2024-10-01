@@ -93,44 +93,46 @@ fun CardMolecule(
                         }
                     }
 
-                    Button(
-                        onClick = {
-                            if (cardAttributes.isExpandable) {
-                                isExpanded = !isExpanded
-                            } else {
-                                cardAttributes.onButtonClick?.invoke()
+                    if(cardAttributes.buttonText != null || cardAttributes.isExpandable){
+                        Button(
+                            onClick = {
+                                if (cardAttributes.isExpandable) {
+                                    isExpanded = !isExpanded
+                                } else {
+                                    cardAttributes.onButtonClick?.invoke()
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(cardStyles.buttonBackgroundColor),
+                            shape = RoundedCornerShape(cardStyles.buttonCorner),
+                            modifier = cardStyles.buttonModifier,
+                            border = cardStyles.buttonBorder,
+                            contentPadding = cardStyles.buttonContentPadding
+                        ) {
+                            cardAttributes.buttonText?.let {
+                                Text(
+                                    text = it,
+                                    style = cardStyles.buttonTextStyle
+                                )
                             }
-                        },
-                        colors = ButtonDefaults.buttonColors(cardStyles.buttonBackgroundColor),
-                        shape = RoundedCornerShape(cardStyles.buttonCorner),
-                        modifier = cardStyles.buttonModifier,
-                        border = cardStyles.buttonBorder,
-                        contentPadding = cardStyles.buttonContentPadding
-                    ) {
-                        cardAttributes.buttonText?.let {
-                            Text(
-                                text = it,
-                                style = cardStyles.buttonTextStyle
-                            )
-                        }
 
-                        if (cardAttributes.isExpandable) {
-                            Spacer(modifier = Modifier.width(6.dp))
+                            if (cardAttributes.isExpandable) {
+                                Spacer(modifier = Modifier.width(6.dp))
 
-                            if (isExpanded) {
-                                Icon(
-                                    painter = painterResource(cardAttributes.expandImage),
-                                    tint = cardStyles.colorExpandCollapseImage,
-                                    contentDescription = null,
-                                    modifier = cardStyles.buttonImageModifier
-                                )
-                            } else {
-                                Icon(
-                                    painter = painterResource(cardAttributes.collapseImage),
-                                    tint = cardStyles.colorExpandCollapseImage,
-                                    contentDescription = null,
-                                    modifier = cardStyles.buttonImageModifier
-                                )
+                                if (isExpanded) {
+                                    Icon(
+                                        painter = painterResource(cardAttributes.expandImage),
+                                        tint = cardStyles.colorExpandCollapseImage,
+                                        contentDescription = null,
+                                        modifier = cardStyles.buttonImageModifier
+                                    )
+                                } else {
+                                    Icon(
+                                        painter = painterResource(cardAttributes.collapseImage),
+                                        tint = cardStyles.colorExpandCollapseImage,
+                                        contentDescription = null,
+                                        modifier = cardStyles.buttonImageModifier
+                                    )
+                                }
                             }
                         }
                     }

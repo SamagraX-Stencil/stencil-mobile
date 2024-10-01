@@ -13,14 +13,15 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CardListMolecule(
     cardItems: List<CardAttributes>,
-    cardStyles: List<CardStyles>
+    cardStyles: List<CardStyles>,
+    cardListPadding: PaddingValues = PaddingValues(16.dp)
 ) {
     val itemCount = minOf(cardItems.size, cardStyles.size)
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(cardListPadding),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         for (index in 0 until itemCount) {
